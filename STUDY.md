@@ -1,73 +1,123 @@
-# STUDY — choosing the poster for VEYRA
+# STUDY — the VEYRA repair round
 
-Two candidate posters were made for this competition and
-scored against the judge's brief, most important first.
+## How this edition came to be
 
-## The brief, in short
+The first VEYRA poster — a flat vintage screen-print —
+was submitted to this competition and the entrant
+rejected it on sight. A second round in a painterly
+gouache style came closer and was still sent back.
+The third round changed direction entirely: a lush
+cinematic matte painting, rich in fine detail, with
+dramatic golden-hour light. That scene won the
+entrant's eye — with one instruction attached: check
+it again in the smallest detail, and fix every error
+and shortcoming found, however small.
 
-1. It IS a travel poster for a place that does not exist,
-   with the invented name set into the picture.
-2. It makes you want to go: weather, light and one
-   landmark add up to a clear promise.
-3. A distinct identity: name, landmark and atmosphere
-   specific to this poster, not borrowed from a real
-   destination or an existing poster.
-4. Type set with intent: legible, well placed, carries
-   the mood.
-5. Colour and composition sell the place: the eye led
-   from the name to the landmark to the horizon.
+This document is the record of that check and of the
+repairs it produced. The shipped poster is the
+repaired matte painting, nothing else.
 
-## Candidate 1 — VEYRA (chosen, ≈93/100)
+## The winning scene
 
-A vintage screen-print poster: the white terraced town of
-VEYRA ringing both arms of a horseshoe cliff while its
-waterfall pours into a turquoise bay, two small boats
-below, a sunburst at the right, amber/teal/cream palette.
+A white terraced town climbs both arms of a horseshoe
+gorge: church spire on the left arm, castle tower on
+the right, arcaded houses with varied rooflines
+between. The town's river runs through the middle and
+pours over the lip as a broad luminous waterfall, the
+centrepiece of the frame. Mist drifts in the gorge;
+below, a harbour town rings a deep teal bay full of
+wooden boats. The title sits in the calm sky band at
+the top, so the eye runs name, town, falls, bay.
 
-- Criterion 1: the name VEYRA is set into the picture,
-  large, at the top. The place is invented whole.
-- Criterion 2: golden-hour light, warm stone against cool
-  water, one landmark — the falls — promising exactly
-  what a stay would feel like.
-- Criterion 3: the horseshoe town is specific to this
-  poster; it is not a real resort and borrows no known
-  poster.
-- Criterion 4: art-deco letterforms with inline double
-  strokes, seated on a deco baseline rule — the type
-  carries the mood instead of sitting on top of it.
-- Criterion 5: the eye path is name → falls → bay, in
-  one palette, one mood.
+Five candidate scenes were generated and scored
+pairwise on detail richness, light drama, composition
+and freedom from artefacts. The frontal golden-hour
+scene won outright: it was the only one whose falls
+pour broad and bright from the town's heart into the
+bay, with real shadow modelling and no repeated
+houses. The dusk and misty-morning candidates were
+beautiful but weaker on the falls or off the concept.
 
-## Candidate 2 — NIMBARA (runner-up, ≈90/100)
+## The audit (tile by tile, double zoom)
 
-A mountain-lake harbour above a sea of clouds at dawn.
-Beautiful and inviting, but it could be mistaken for a
-real alpine resort poster. On criterion 3 — a distinct,
-unborrowed identity — VEYRA beats it by much more, and
-on the judge's first-difference rule that settles it.
-Kept as fallback only, not shipped.
+The full-resolution scene, 1120 by 2240, was cut into
+six overlapping tiles and every tile was read at
+double zoom: the two town arms, the falls source, the
+falls middle and left cliff, the right cliff town,
+and the lower harbour. Findings, worst first:
 
-## Audit of the winner (adversarial, crop-zoom)
+1. CRITICAL — the left cliff held a huge dark cave
+   arch, and inside the arch a flat teal water surface
+   floated at mid-cliff height beside the falls: a
+   lake inside the rock, geometrically impossible,
+   reading as a hole in the world.
+2. CRITICAL — several small boats floated in the
+   narrow river channel between the towns, right at
+   the waterfall's lip, as if about to go over.
+3. MAJOR — the falls poured out of a turquoise slot
+   between buildings, with no visible river feeding
+   them.
+4. MAJOR — the smaller right-hand cascade emerged
+   from underneath a cliff house, sourceless.
+5. MINOR — a dark boat-shaped object floated in the
+   plunge pool below the falls, reading as a wreck.
+6. MINOR — one dinghy in the lower harbour was bright
+   cyan-blue, a colour nothing else in the frame owns.
+7. MINOR — a handful of window arches and balconies
+   in the cliff houses were warped or uneven, and
+   the distant cliff band behind the town sat flat.
 
-The ONLY text in the poster is the name. Transcription
-at crop zoom: **V-E-Y-R-A**, five letters, consistent
-art-deco letterforms with inline double strokes, seated
-on a deco baseline rule. The small horizontal marks under
-the letters are rules and ornaments, not letters.
+The church, the castle, the sky and the harbour
+layout were clean and were not touched in substance.
 
-No other words, letters, quotes, star ratings or copy
-anywhere in the frame — the houses, the boats and the
-sunburst are all text-free.
+## The repairs
 
-Internal consistency: one landmark (the horseshoe falls),
-one palette, one mood — a golden-hour promise.
+Each finding was repaired and then re-audited in the
+same tiles before the next was accepted:
 
-**Result: ZERO defects. No patch needed.**
+1. The cave and its floating water were painted out
+   entirely; the left cliff is now solid sunlit rock
+   with drifting mist, continuous with its neighbours.
+2. Every boat was lifted out of the upper river. The
+   channel now reads as clear flowing water running
+   between the two towns to the lip.
+3. The falls' crest was reworked over the cleared
+   channel, so the water visibly pours from the river.
+4. The right cascade now descends a stepped stream
+   channel in a rock notch beside the houses; its
+   source reads naturally.
+5. The plunge-pool object became a dark rock outcrop
+   ringed with white foam and spray.
+6. The blue dinghy was repainted pixel-locally into
+   weathered wood. Two first attempts at this micro
+   fix failed visibly — one stained the water, one
+   caught only part of the hull — and both were
+   discarded; the accepted fix grew the boat's own
+   connected shape and recoloured exactly that, so
+   no trace of cyan and no smear remains.
+7. Warped arches and balconies were straightened and
+   the far cliff band softened into the haze.
+
+The title was then composited once more, from the
+repaired full-resolution scene: VEYRA in letterspaced
+Noto Serif Display, ink a deep teal sampled from the
+bay water, a thin rule with a centre diamond beneath,
+placed in the calm sky clear of spire and castle.
+The finished frame was downscaled to 512 by 1024.
+
+## Re-audit result
+
+All six zones were read again at double zoom after
+the repairs: the cave is gone, the river is clear,
+the cascades have sources, the harbour fleet shares
+one palette, and the architecture reads deliberate.
+No new artefact was introduced by any repair. The
+only text in the frame is the name: V-E-Y-R-A.
 
 ## Verification of the shipped file
 
-- `image.jpg`: JPEG, 1024 × 1024, 259,023 bytes.
+- `image.jpg`: JPEG, 512 × 1024, 175,685 bytes.
 - sha256:
-  `d1750e8d1d688fdaaa426ccfb4cf888d3d4da78728bcd299982e02954dff3c20`
-- `main.py` run twice produces the identical sha256 at
-  `/output/entry.png`.
+  `7fb905720262c8cfac5208370ff999429827010c8e1dbfe7258ed8484386009f`
+- `main.py` run twice prints identical lines and the
+  identical sha256 at `/output/entry.png`.

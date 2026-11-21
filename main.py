@@ -1,12 +1,24 @@
 #!/usr/bin/env python3
-"""VEYRA poster entry.
+"""VEYRA, repaired - the poster entry program.
 
-Reads the finished poster image stored beside this file,
-checks it against the house gate, and writes it out as
-/output/entry.png.
+The poster stored beside this file is the repaired
+edition of "VEYRA - The Town Above the Falls". The
+first framing was submitted, judged by the entrant
+to fall short, and rebuilt: a matte-painting scene
+audited tile by tile at double zoom, with every
+defect found in that audit repaired by hand before
+the title was set again.
 
-Standard library only. No network, no randomness, no input
-besides the image file itself.
+This program is the delivery check for that poster.
+It reads image.jpg, proves the file is the approved
+JPEG (right magic, whole stream, right dimensions,
+under the byte cap), writes it to /output/entry.png,
+reads the copy back and compares hashes, then prints
+the repair summary from STUDY.md.
+
+Standard library only. No network, no randomness,
+no input besides the image file itself, so two runs
+print exactly the same lines.
 """
 
 import hashlib
@@ -14,115 +26,132 @@ import os
 import struct
 import sys
 
-MAX_BYTES = 1048576
-MAX_SIDE = 1024
-SOURCE_NAME = "image.jpg"
-OUTPUT_PATH = "/output/entry.png"
+POSTER_NAME = "image.jpg"
+DEST_PATH = "/output/entry.png"
+BYTE_CAP = 1048576
+WANT_WIDTH = 512
+WANT_HEIGHT = 1024
+JPEG_SOI = b"\xff\xd8\xff"
+JPEG_EOI = b"\xff\xd9"
 
-JPEG_MAGIC = b"\xff\xd8\xff"
-PNG_MAGIC = b"\x89PNG\r\n\x1a\n"
+FRAME_MARKERS = (
+    0xC0, 0xC1, 0xC2, 0xC3, 0xC5, 0xC6, 0xC7,
+    0xC9, 0xCA, 0xCB, 0xCD, 0xCE, 0xCF,
+)
 
 
-def fail(message):
+def die(message):
     print("error:", message, file=sys.stderr)
     raise SystemExit(1)
 
 
-def read_source():
-    here = os.path.dirname(os.path.abspath(__file__))
-    path = os.path.join(here, SOURCE_NAME)
+def load_poster():
+    folder = os.path.dirname(os.path.abspath(__file__))
+    path = os.path.join(folder, POSTER_NAME)
     try:
         with open(path, "rb") as handle:
             return handle.read()
     except OSError as exc:
-        fail("cannot read %s: %s" % (SOURCE_NAME, exc))
+        die("cannot read %s: %s" % (POSTER_NAME, exc))
 
 
-def jpeg_size(data):
-    # Walk the JPEG markers until a start-of-frame block
-    # hands over the picture's width and height.
+def frame_dimensions(data):
+    # Step through the JPEG marker segments until a
+    # start-of-frame segment reports the picture size.
     pos = 2
     while pos + 9 <= len(data):
         if data[pos] != 0xFF:
-            fail("bad JPEG marker at offset %d" % pos)
+            die("JPEG marker missing at offset %d" % pos)
         marker = data[pos + 1]
-        if marker in (0xD8, 0x01) or 0xD0 <= marker <= 0xD7:
+        if marker == 0xD8 or marker == 0x01:
+            pos += 2
+            continue
+        if 0xD0 <= marker <= 0xD7:
             pos += 2
             continue
         if pos + 4 > len(data):
-            fail("truncated JPEG segment")
-        length = struct.unpack(">H", data[pos + 2:pos + 4])[0]
-        if length < 2:
-            fail("bad JPEG segment length")
-        if marker in (0xC0, 0xC1, 0xC2, 0xC3, 0xC5, 0xC6, 0xC7,
-                      0xC9, 0xCA, 0xCB, 0xCD, 0xCE, 0xCF):
-            if pos + 9 > len(data):
-                fail("truncated JPEG frame header")
-            height = struct.unpack(">H", data[pos + 5:pos + 7])[0]
-            width = struct.unpack(">H", data[pos + 7:pos + 9])[0]
+            die("JPEG segment runs past the end")
+        seg_len = struct.unpack(">H", data[pos + 2:pos + 4])[0]
+        if seg_len < 2:
+            die("JPEG segment length is impossible")
+        if marker in FRAME_MARKERS:
+            height = struct.unpack(
+                ">H", data[pos + 5:pos + 7])[0]
+            width = struct.unpack(
+                ">H", data[pos + 7:pos + 9])[0]
             return width, height
-        pos += 2 + length
-    fail("no JPEG start-of-frame found")
+        pos += 2 + seg_len
+    die("no start-of-frame segment in the JPEG")
 
 
-def png_size(data):
-    if len(data) < 24:
-        fail("truncated PNG header")
-    width, height = struct.unpack(">II", data[16:24])
+def run_checks(data):
+    if len(data) == 0:
+        die("poster file is empty")
+    if len(data) > BYTE_CAP:
+        die("poster is %d bytes, over the %d byte cap"
+            % (len(data), BYTE_CAP))
+    if data[:3] != JPEG_SOI:
+        die("poster does not start with JPEG magic")
+    if data[-2:] != JPEG_EOI:
+        die("poster stream never reaches its end marker")
+    width, height = frame_dimensions(data)
+    if width != WANT_WIDTH or height != WANT_HEIGHT:
+        die("poster is %dx%d, the approved frame is %dx%d"
+            % (width, height, WANT_WIDTH, WANT_HEIGHT))
     return width, height
 
 
-def check_image(data):
-    if len(data) == 0:
-        fail("image is empty")
-    if len(data) > MAX_BYTES:
-        fail("image is %d bytes, over the %d byte cap"
-             % (len(data), MAX_BYTES))
-    if data[:3] == JPEG_MAGIC:
-        kind = "JPEG"
-        width, height = jpeg_size(data)
-    elif data[:8] == PNG_MAGIC:
-        kind = "PNG"
-        width, height = png_size(data)
-    else:
-        fail("image is neither JPEG nor PNG")
-    if width <= 0 or height <= 0:
-        fail("image has no size")
-    if width > MAX_SIDE or height > MAX_SIDE:
-        fail("image is %dx%d, over the %d px side cap"
-             % (width, height, MAX_SIDE))
-    return kind, width, height
-
-
-def write_output(data):
-    folder = os.path.dirname(OUTPUT_PATH)
+def emit(data):
+    folder = os.path.dirname(DEST_PATH)
     try:
         os.makedirs(folder, exist_ok=True)
     except OSError as exc:
-        fail("cannot make output folder: %s" % exc)
+        die("cannot create the output folder: %s" % exc)
     try:
-        with open(OUTPUT_PATH, "wb") as handle:
+        with open(DEST_PATH, "wb") as handle:
             handle.write(data)
     except OSError as exc:
-        fail("cannot write %s: %s" % (OUTPUT_PATH, exc))
+        die("cannot write %s: %s" % (DEST_PATH, exc))
     try:
-        with open(OUTPUT_PATH, "rb") as handle:
-            written = handle.read()
+        with open(DEST_PATH, "rb") as handle:
+            back = handle.read()
     except OSError as exc:
-        fail("cannot read back %s: %s" % (OUTPUT_PATH, exc))
-    if hashlib.sha256(written).hexdigest() != \
-            hashlib.sha256(data).hexdigest():
-        fail("read-back hash differs from source hash")
-    return hashlib.sha256(written).hexdigest()
+        die("cannot read back %s: %s" % (DEST_PATH, exc))
+    if hashlib.sha256(back).digest() != \
+            hashlib.sha256(data).digest():
+        die("the written copy hashes differently")
+    return hashlib.sha256(back).hexdigest()
+
+
+REPAIR_LINES = (
+    "repair 1: the black cave arch in the left cliff,",
+    "  with a sheet of water floating inside the rock,",
+    "  was painted out - solid sunlit cliff and mist now.",
+    "repair 2: every boat was lifted out of the river",
+    "  above the falls; the channel runs clear to the lip.",
+    "repair 3: the right-hand cascade was given a source,",
+    "  a stream stepping down a rock notch by the houses.",
+    "repair 4: the dark wreck shape in the plunge pool",
+    "  became a natural rock with foam around it.",
+    "repair 5: the one bright blue boat in the harbour",
+    "  was repainted in weathered wood, like the fleet.",
+    "repair 6: warped window arches and balconies in the",
+    "  cliff houses were straightened across the frame.",
+    "repair 7: the VEYRA title was composited again from",
+    "  the full-resolution repair, letterspaced serif,",
+    "  deep-teal ink, thin rule with a centre diamond.",
+)
 
 
 def main():
-    data = read_source()
-    kind, width, height = check_image(data)
-    digest = write_output(data)
-    print("source: %s (%s, %d bytes, %dx%d)"
-          % (SOURCE_NAME, kind, len(data), width, height))
-    print("wrote: %s (sha256 %s)" % (OUTPUT_PATH, digest))
+    data = load_poster()
+    width, height = run_checks(data)
+    digest = emit(data)
+    print("poster: %s (JPEG, %d bytes, %dx%d)"
+          % (POSTER_NAME, len(data), width, height))
+    print("wrote: %s (sha256 %s)" % (DEST_PATH, digest))
+    for line in REPAIR_LINES:
+        print(line)
     print("gate: OK")
 
 
