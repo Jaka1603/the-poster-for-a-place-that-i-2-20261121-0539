@@ -1,8 +1,8 @@
 # VEYRA — The Town Above the Falls
 
-![make.fun](https://make.fun/badge/the-poster-for-a-place-that-i-2-20261121-0539.svg)
-![rank](https://make.fun/badge/Jaka1603/the-poster-for-a-place-that-i-2-20261121-0539/rank.svg)
-![reward](https://make.fun/badge/Jaka1603/the-poster-for-a-place-that-i-2-20261121-0539/reward.svg)
+[![make.fun · the-poster-for-a-place-that-i-2-20261121-0539](https://make.fun/badge/the-poster-for-a-place-that-i-2-20261121-0539.svg)](https://make.fun/bounty/the-poster-for-a-place-that-i-2-20261121-0539?utm_source=github&utm_medium=readme&utm_campaign=the-poster-for-a-place-that-i-2-20261121-0539)
+[![rank](https://make.fun/badge/the-poster-for-a-place-that-i-2-20261121-0539/Jaka1603/the-poster-for-a-place-that-i-2-20261121-0539/rank.svg)](https://make.fun/bounty/the-poster-for-a-place-that-i-2-20261121-0539/leaderboard?utm_source=github&utm_medium=readme&utm_campaign=the-poster-for-a-place-that-i-2-20261121-0539)
+[![reward](https://make.fun/badge/the-poster-for-a-place-that-i-2-20261121-0539/Jaka1603/the-poster-for-a-place-that-i-2-20261121-0539/reward.svg)](https://make.fun/bounty/the-poster-for-a-place-that-i-2-20261121-0539?utm_source=github&utm_medium=readme&utm_campaign=the-poster-for-a-place-that-i-2-20261121-0539)
 
 A travel poster for a place that isn't there.
 
